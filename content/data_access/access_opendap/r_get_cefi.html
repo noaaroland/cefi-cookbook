@@ -1,0 +1,1275 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Accessing CEFI data with R &#8212; CEFI Data Cookbook</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/data_access/access_opendap/r_get_cefi';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Cloud Storage" href="../access_cloud.html" />
+    <link rel="prev" title="Accessing CEFI data with Python" href="python_get_cefi.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../../_static/searchtools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../cefi_goal.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/CEFI_logo_nobg.png" class="logo__image only-light" alt="CEFI Data Cookbook - Home"/>
+    <img src="../../../_static/CEFI_logo_nobg.png" class="logo__image only-dark pst-js-only" alt="CEFI Data Cookbook - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../cefi_goal.html">
+                    Changing, Ecosystems, and Fisheries Initiative (CEFI)
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">CEFI Data Portal's Goal</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">CEFI Data Portal</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">How to?</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_use.html">Use the CEFI Cookbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_conda.html">Setup An Analyses Ready Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_jupyter.html">Launch A Local JupyterLab</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regional MOM6</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../model_doc/what_is_regional_mom6.html">Regional MOM6 introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../model_doc/model_config/model_grid.html">Regional MOM6 Grid</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../model_doc/regional_mom6_faq.html">Frequently Ask Questions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Data Access</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../access_cefi.html">CEFI data</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../access_cefi/python_get_cefi.html">Accessing CEFI data with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../access_cefi/r_get_cefi.html">Accessing CEFI data with R</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../access_cefi/python_get_cefi_cloud.html">Accessing CEFI Cloud data with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../access_cefi/r_get_cefi_cloud.html">Accessing CEFI Cloud data with R</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../access_erddap.html">ERDDAP Server</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../access_erddap/erddap_interface.html">ERDDAP Server Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../access_erddap/python_interface_griddap.html">Accessing gridded data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../access_erddap/python_interface_tabledap.html">Accessing table (spreadsheet) data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../access_erddap/python_get_gliders.html">Batch access (ex: gliders)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../access_erddap/R_erddap.html">Accessing ERDDAP data with R</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../access_opendap.html">OPeNDAP Server</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="opendap_interface.html">OPeNDAP Server Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_get_cefi.html">Accessing CEFI data with Python</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Accessing CEFI data with R</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../access_cloud.html">Cloud Storage</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../access_cloud/python_get_cefi_cloud.html">Accessing CEFI Cloud data with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../access_cloud/r_get_cefi_cloud.html">Accessing CEFI Cloud data with R</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../access_polar.html">NOAA PolarWatch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_faq.html">Frequently Ask Questions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://ioos.github.io/ioos_code_lab/content/intro.html">The U.S. Integrated Ocean Observing System (IOOS) CodeLab</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/NOAA-CEFI-Portal/cefi-cookbook/main?urlpath=lab/tree/content/data_access/access_opendap/r_get_cefi.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/NOAA-CEFI-Portal/cefi-cookbook/blob/main/content/data_access/access_opendap/r_get_cefi.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/NOAA-CEFI-Portal/cefi-cookbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/NOAA-CEFI-Portal/cefi-cookbook/issues/new?title=Issue%20on%20page%20%2Fcontent/data_access/access_opendap/r_get_cefi.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content/data_access/access_opendap/r_get_cefi.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Accessing CEFI data with R</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#packages-used">Packages used</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-r-packages">Import R packages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#help-page-for-the-package-and-related-functions">Help page for the package and related functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#direct-opendap-server-data-access">Direct OPeNDAP server data access</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#link-to-data-source-regular-gridded-product">Link to data source (regular gridded product)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-the-data-to-local-memory">Load the data to local memory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-time-array-to-datetime">Converting time array to datetime</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-view-of-the-data">Quick view of the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convert-the-matrix-to-dataframe">Convert the matrix to dataframe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#link-to-data-source-raw-gridded-product">Link to data source (Raw gridded product)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Load the data to local memory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Converting time array to datetime</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Quick view of the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Convert the matrix to dataframe</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="accessing-cefi-data-with-r">
+<h1>Accessing CEFI data with R<a class="headerlink" href="#accessing-cefi-data-with-r" title="Link to this heading">#</a></h1>
+<p>The following notebook is a quick demostration on how to use R to access the OPeNDAP server data. This is designed for users that prefer the programing interface to be R. There are already couple of great resource related to preprocessing and visualizing data in R. Therefore, the notebook will not repeat that part of the code but focusing on how to accessing the data from a R interface. The resources is listed below</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="http://cran.nexr.com/web/packages/rerddap/vignettes/Using_rerddap.html">http://cran.nexr.com/web/packages/rerddap/vignettes/Using_rerddap.html</a> (A detail introduction of rerddap package and show the visualization in many different datasets)</p></li>
+<li><p><a class="reference external" href="https://ioos.github.io/ioos_code_lab/content/code_gallery/data_access_notebooks/2017-08-01-xtractoR.html">https://ioos.github.io/ioos_code_lab/content/code_gallery/data_access_notebooks/2017-08-01-xtractoR.html</a> (use a different package called xtractomatic to access the ERDDAP data)</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition alert alert-info">
+    <p class="admonition-title" style="font-weight:bold">Launch R in Jupyterlab</p>
+    In addition to the standard R code demonstrated below, our current interface leverages JupyterLab to execute R code using the R kernel. To enable this functionality, we utilize the environment.yml file to create a Conda/Mamba environment. The primary objective is to install the r-irkernel package within this environment.
+<p>This installation of r-irkernel through Conda/Mamba ensures that the R kernel becomes available as an option when launching JupyterLab. Selecting the R kernel empowers users to utilize the JupyterLab interface for running R code effortlessly.</p>
+</div><section id="packages-used">
+<h2>Packages used<a class="headerlink" href="#packages-used" title="Link to this heading">#</a></h2>
+<p>To use R to access the OPeNDAP server directly from your R script or R-notebook, you will need</p>
+<ul class="simple">
+<li><p>ncdf4</p></li>
+</ul>
+<p>There are couple of ways to install the packages, here we provide two popular ways below</p>
+<ol class="arabic simple">
+<li><p>In the R environment, <code class="docutils literal notranslate"><span class="pre">install.packages('&lt;package</span> <span class="pre">name&gt;')</span></code></p></li>
+<li><p>In the conda/mamba environment for package version control, <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">r-&lt;package</span> <span class="pre">name&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">mamba</span> <span class="pre">install</span> <span class="pre">r-&lt;package</span> <span class="pre">name&gt;</span></code> (many r package can be install this way by adding “r-” in front of the package name)</p></li>
+</ol>
+</section>
+<section id="import-r-packages">
+<h2>Import R packages<a class="headerlink" href="#import-r-packages" title="Link to this heading">#</a></h2>
+<p>The way to import packages to the current R environment is to use the <code class="docutils literal notranslate"><span class="pre">require</span></code> or <code class="docutils literal notranslate"><span class="pre">library</span></code> functions
+Both functions will import the package but with subtle different of</p>
+<blockquote>
+<div><p>The require() and library() functions can both be used to load packages in R, but they have one subtle difference:</p>
+<ul class="simple">
+<li><p>require() will output a warning if a package is not installed and then continue to execute the code.</p></li>
+<li><p>library() will output an error and stop the execution of the code.</p></li>
+</ul>
+</div></blockquote>
+<p>Detail explanation can be find <a class="reference external" href="https://www.statology.org/r-require-vs-library/#:~:text=The%20require()%20and%20library,the%20execution%20of%20the%20code.">here</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">"ncdf4"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="help-page-for-the-package-and-related-functions">
+<h2>Help page for the package and related functions<a class="headerlink" href="#help-page-for-the-package-and-related-functions" title="Link to this heading">#</a></h2>
+<p>A great way to find information about the package directly in the R-notebook environment is to add the <code class="docutils literal notranslate"><span class="pre">?</span></code> in front of the package/function name</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="o">??</span><span class="n">ncdf4</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R Information
+
+Help files with alias or concept or title matching ‘ncdf4’ using fuzzy
+matching:
+
+
+ncdf4::nc_version       Report version of ncdf4 library
+ncdf4::ncdf4-package    Read, write, and create netCDF files (including
+                        version 4 format)
+  Aliases: ncdf4-package
+ncdf4::ncdim_create     Internal ncdf4 functions
+  Aliases: default_missval_ncdf4, blankstring_ncdf4, nslashes_ncdf4,
+    ncdf4_format, ncdf4_make_id
+ncdf4::print.ncdf4      Print Information About a netCDF File
+  Aliases: print.ncdf4
+
+
+Type '?PKG::FOO' to inspect entries 'PKG::FOO', or 'TYPE?PKG::FOO' for
+entries like 'PKG::FOO-TYPE'.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="direct-opendap-server-data-access">
+<h2>Direct OPeNDAP server data access<a class="headerlink" href="#direct-opendap-server-data-access" title="Link to this heading">#</a></h2>
+<p>With the help of the ncdf4 package we are able to load the data that is hosted on the OPeNDAP server and grab the coordinate and attribute without the need to downloading the entire dataset.</p>
+<ul class="simple">
+<li><p>first we need to find the URL that can provide the OPeNDAP access for R (this can be find on the THREDDS server <a class="reference external" href="https://psl.noaa.gov/thredds/catalog/Projects/CEFI/regional_mom6/northwest_atlantic/hist_run/catalog.html">here</a>)</p></li>
+<li><p>click on OPeNDAP option when clicking on any of the netcdf files</p></li>
+<li><p>on top of the OPeNDAP form there is a URL for accessing the data</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><a class="reference internal" href="opendap_interface.html#opendapdata"><span class="std std-ref">Understanding of the OPeNDAP server and what it provides</span></a> is highly recommended before reading the following intructions.</p>
+</div>
+<section id="link-to-data-source-regular-gridded-product">
+<h3>Link to data source (regular gridded product)<a class="headerlink" href="#link-to-data-source-regular-gridded-product" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Specify the OPeNDAP server URL (using regular grid output)</span>
+<span class="n">url</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">"http://psl.noaa.gov/thredds/dodsC/Projects/CEFI/regional_mom6/northwest_atlantic/hist_run/regrid/ocean_monthly.199301-201912.sos.nc"</span>
+
+<span class="c1"># Open a NetCDF file lazily and remotely</span>
+<span class="n">ncopendap</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">nc_open</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="load-the-data-to-local-memory">
+<h3>Load the data to local memory<a class="headerlink" href="#load-the-data-to-local-memory" title="Link to this heading">#</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>There is a 500MB limit per request so making sure the data request each time is not over the limit. For loop to seperate the request is one of the solution to avoid the single time request becoming to large.</p>
+</div>
+<p>Here we only request a single slice in the time domain but the whole northeast Atlantic domain in the regional mom6 model. Since this is the part that actually downloading the data. It would takes a bit longer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read the data into memory</span>
+<span class="n">timeslice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>
+<span class="n">lon</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ncvar_get</span><span class="p">(</span><span class="n">ncopendap</span><span class="p">,</span><span class="w"> </span><span class="s">"lon"</span><span class="p">)</span>
+<span class="n">lat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ncvar_get</span><span class="p">(</span><span class="n">ncopendap</span><span class="p">,</span><span class="w"> </span><span class="s">"lat"</span><span class="p">)</span>
+<span class="n">time</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ncvar_get</span><span class="p">(</span><span class="n">ncopendap</span><span class="p">,</span><span class="w"> </span><span class="s">"time"</span><span class="p">,</span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">timeslice</span><span class="p">),</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">))</span>
+
+<span class="c1"># Read a slice of the data into memory</span>
+<span class="n">sos</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ncvar_get</span><span class="p">(</span><span class="n">ncopendap</span><span class="p">,</span><span class="w"> </span><span class="s">"sos"</span><span class="p">,</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">timeslice</span><span class="p">),</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># the matrix output of sea surface salinity</span>
+<span class="n">sos</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A matrix: 774 × 844 of type dbl</caption>
+<tbody>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋱</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td></tr>
+	<tr><td>      NA</td><td>36.06681</td><td>36.06974</td><td>36.07292</td><td>36.07632</td><td>36.07998</td><td>36.08291</td><td>36.08522</td><td>36.08725</td><td>36.08934</td><td>⋯</td><td>34.73696</td><td>34.73539</td><td>34.73647</td><td>34.74131</td><td>34.74666</td><td>34.75334</td><td>34.75716</td><td>34.75456</td><td>      NA</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>36.06295</td><td>36.06661</td><td>36.07045</td><td>36.07452</td><td>36.07897</td><td>36.08310</td><td>36.08648</td><td>36.08923</td><td>36.09155</td><td>⋯</td><td>34.74045</td><td>34.73808</td><td>34.73823</td><td>34.74231</td><td>34.74707</td><td>34.75413</td><td>34.75976</td><td>34.75694</td><td>      NA</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>36.05849</td><td>36.06314</td><td>36.06780</td><td>36.07257</td><td>36.07759</td><td>36.08237</td><td>36.08672</td><td>36.09046</td><td>36.09347</td><td>⋯</td><td>34.74746</td><td>34.74201</td><td>34.74012</td><td>34.74227</td><td>34.74576</td><td>34.75234</td><td>34.75902</td><td>34.75777</td><td>      NA</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>36.05369</td><td>36.05925</td><td>36.06476</td><td>36.07031</td><td>36.07592</td><td>36.08116</td><td>36.08618</td><td>36.09076</td><td>36.09464</td><td>⋯</td><td>34.75548</td><td>34.74885</td><td>34.74416</td><td>34.74366</td><td>34.74535</td><td>34.75097</td><td>34.75755</td><td>34.75734</td><td>      NA</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>36.04902</td><td>36.05526</td><td>36.06161</td><td>36.06792</td><td>36.07402</td><td>36.07977</td><td>36.08530</td><td>36.09044</td><td>36.09501</td><td>⋯</td><td>34.76160</td><td>34.75608</td><td>34.75015</td><td>34.74781</td><td>34.74790</td><td>34.75181</td><td>34.75766</td><td>34.75819</td><td>34.75734</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>36.04408</td><td>36.05053</td><td>36.05745</td><td>36.06454</td><td>36.07141</td><td>36.07781</td><td>36.08392</td><td>36.08958</td><td>36.09463</td><td>⋯</td><td>34.76550</td><td>34.76152</td><td>34.75721</td><td>34.75390</td><td>34.75283</td><td>34.75468</td><td>34.75901</td><td>34.76021</td><td>34.75845</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>36.04190</td><td>36.04766</td><td>36.05413</td><td>36.06111</td><td>36.06828</td><td>36.07522</td><td>36.08199</td><td>36.08827</td><td>36.09380</td><td>⋯</td><td>34.76876</td><td>34.76551</td><td>34.76207</td><td>34.75816</td><td>34.75706</td><td>34.75796</td><td>34.76087</td><td>34.76239</td><td>34.76061</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>36.04018</td><td>36.04603</td><td>36.05214</td><td>36.05864</td><td>36.06561</td><td>36.07269</td><td>36.07980</td><td>36.08659</td><td>36.09266</td><td>⋯</td><td>34.76980</td><td>34.76541</td><td>34.76189</td><td>34.75913</td><td>34.75877</td><td>34.76064</td><td>34.76353</td><td>34.76416</td><td>34.76292</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>36.03717</td><td>36.04394</td><td>36.05040</td><td>36.05678</td><td>36.06345</td><td>36.07047</td><td>36.07769</td><td>36.08479</td><td>36.09132</td><td>⋯</td><td>34.76788</td><td>34.76265</td><td>34.75869</td><td>34.75768</td><td>34.75938</td><td>34.76270</td><td>34.76633</td><td>34.76665</td><td>34.76496</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>36.03350</td><td>36.04106</td><td>36.04810</td><td>36.05481</td><td>36.06152</td><td>36.06849</td><td>36.07570</td><td>36.08286</td><td>36.08960</td><td>⋯</td><td>34.76396</td><td>34.76099</td><td>34.76042</td><td>34.76034</td><td>34.76133</td><td>34.76479</td><td>34.76829</td><td>34.76902</td><td>34.76764</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>36.02943</td><td>36.03791</td><td>36.04574</td><td>36.05303</td><td>36.06005</td><td>36.06709</td><td>36.07425</td><td>36.08128</td><td>36.08791</td><td>⋯</td><td>34.76386</td><td>34.76818</td><td>34.77166</td><td>34.77100</td><td>34.76776</td><td>34.76808</td><td>34.76986</td><td>34.77100</td><td>34.77069</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>36.02458</td><td>36.03363</td><td>36.04208</td><td>36.05010</td><td>36.05777</td><td>36.06527</td><td>36.07266</td><td>36.07973</td><td>36.08626</td><td>⋯</td><td>34.76764</td><td>34.77813</td><td>34.78325</td><td>34.78295</td><td>34.77775</td><td>34.77345</td><td>34.77206</td><td>34.77309</td><td>34.77344</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>36.01963</td><td>36.02950</td><td>36.03859</td><td>36.04711</td><td>36.05532</td><td>36.06328</td><td>36.07097</td><td>36.07821</td><td>36.08479</td><td>⋯</td><td>34.76589</td><td>34.77855</td><td>34.78933</td><td>34.79220</td><td>34.78659</td><td>34.77967</td><td>34.77597</td><td>34.77587</td><td>34.77601</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>36.01572</td><td>36.02608</td><td>36.03551</td><td>36.04424</td><td>36.05259</td><td>36.06091</td><td>36.06899</td><td>36.07661</td><td>36.08349</td><td>⋯</td><td>34.75874</td><td>34.77301</td><td>34.78843</td><td>34.79423</td><td>34.79357</td><td>34.78385</td><td>34.78009</td><td>34.77915</td><td>34.77828</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>36.01262</td><td>36.02339</td><td>36.03323</td><td>36.04221</td><td>36.05057</td><td>36.05886</td><td>36.06705</td><td>36.07491</td><td>36.08214</td><td>⋯</td><td>34.75564</td><td>34.77016</td><td>34.78686</td><td>34.79307</td><td>34.79391</td><td>34.78737</td><td>34.78199</td><td>34.78096</td><td>34.78004</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>36.00889</td><td>36.01962</td><td>36.02956</td><td>36.03890</td><td>36.04763</td><td>36.05627</td><td>36.06479</td><td>36.07304</td><td>36.08072</td><td>⋯</td><td>34.75578</td><td>34.77051</td><td>34.78710</td><td>34.79151</td><td>34.79279</td><td>34.78922</td><td>34.78222</td><td>34.78127</td><td>34.78144</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>36.00357</td><td>36.01318</td><td>36.02231</td><td>36.03156</td><td>36.04055</td><td>36.04980</td><td>36.05910</td><td>36.06818</td><td>36.07665</td><td>⋯</td><td>34.75756</td><td>34.77338</td><td>34.78811</td><td>34.78880</td><td>34.78954</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>35.99727</td><td>36.00686</td><td>36.01548</td><td>36.02365</td><td>36.03199</td><td>36.04065</td><td>36.04974</td><td>36.05908</td><td>36.06821</td><td>⋯</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>35.99375</td><td>36.00301</td><td>36.01150</td><td>36.01948</td><td>36.02755</td><td>36.03580</td><td>36.04436</td><td>36.05302</td><td>36.06137</td><td>⋯</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>35.99067</td><td>35.99976</td><td>36.00843</td><td>36.01677</td><td>36.02492</td><td>36.03313</td><td>36.04148</td><td>36.04988</td><td>36.05798</td><td>⋯</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>35.98929</td><td>35.99733</td><td>36.00493</td><td>36.01240</td><td>36.02032</td><td>36.02892</td><td>36.03785</td><td>36.04679</td><td>36.05525</td><td>⋯</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>35.98853</td><td>35.99566</td><td>36.00272</td><td>36.00967</td><td>36.01695</td><td>36.02480</td><td>36.03326</td><td>36.04210</td><td>36.05079</td><td>⋯</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>35.98984</td><td>35.99562</td><td>36.00151</td><td>36.00760</td><td>36.01403</td><td>36.02109</td><td>36.02871</td><td>36.03672</td><td>36.04471</td><td>⋯</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>35.99236</td><td>35.99694</td><td>36.00180</td><td>36.00718</td><td>36.01291</td><td>36.01927</td><td>36.02615</td><td>36.03342</td><td>36.04070</td><td>⋯</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>35.99572</td><td>35.99891</td><td>36.00230</td><td>36.00635</td><td>36.01140</td><td>36.01728</td><td>36.02369</td><td>36.03047</td><td>36.03728</td><td>⋯</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>35.99943</td><td>36.00193</td><td>36.00453</td><td>36.00752</td><td>36.01143</td><td>36.01679</td><td>36.02267</td><td>36.02894</td><td>36.03537</td><td>⋯</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>36.00339</td><td>36.00506</td><td>36.00668</td><td>36.00868</td><td>36.01175</td><td>36.01678</td><td>36.02245</td><td>36.02861</td><td>36.03501</td><td>⋯</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>36.00587</td><td>36.00730</td><td>36.00890</td><td>36.01093</td><td>36.01387</td><td>36.01844</td><td>36.02397</td><td>36.03017</td><td>36.03662</td><td>⋯</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>NA</td></tr>
+	<tr><td>      NA</td><td>36.00937</td><td>36.01059</td><td>36.01206</td><td>36.01410</td><td>36.01703</td><td>36.02140</td><td>36.02668</td><td>36.03267</td><td>36.03910</td><td>⋯</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>NA</td></tr>
+	<tr><td>36.00972</td><td>36.01036</td><td>36.01167</td><td>36.01402</td><td>36.01757</td><td>36.02230</td><td>36.02740</td><td>36.03313</td><td>36.03950</td><td>36.04632</td><td>⋯</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>      NA</td><td>NA</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="converting-time-array-to-datetime">
+<h3>Converting time array to datetime<a class="headerlink" href="#converting-time-array-to-datetime" title="Link to this heading">#</a></h3>
+<p>The origial time would be only in the unit of time “days since 1993-01-01”. In order to understand what is the actual time. We need to grab the time unit and the time number and convert to a datetime object.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the units</span>
+<span class="n">tunits</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ncatt_get</span><span class="p">(</span><span class="n">ncopendap</span><span class="p">,</span><span class="w"> </span><span class="s">"time"</span><span class="p">,</span><span class="w"> </span><span class="s">"units"</span><span class="p">)</span>
+<span class="n">datesince</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tunits</span><span class="o">$</span><span class="n">value</span>
+<span class="n">datesince</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">substr</span><span class="p">(</span><span class="n">datesince</span><span class="p">,</span><span class="w"> </span><span class="nf">nchar</span><span class="p">(</span><span class="n">datesince</span><span class="p">)</span><span class="m">-9</span><span class="p">,</span><span class="w"> </span><span class="nf">nchar</span><span class="p">(</span><span class="n">datesince</span><span class="p">))</span>
+<span class="n">datesince</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">'1993-01-01'</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># convert the number to datetime (input should be in second while the time is in unit of days)</span>
+<span class="n">datetime_var</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.POSIXct</span><span class="p">(</span><span class="n">time</span><span class="o">*</span><span class="m">86400</span><span class="p">,</span><span class="w"> </span><span class="n">origin</span><span class="o">=</span><span class="n">datesince</span><span class="p">,</span><span class="w"> </span><span class="n">tz</span><span class="o">=</span><span class="s">"UTC"</span><span class="p">)</span>
+<span class="n">datetime_var</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] "1993-01-16 12:00:00 UTC"
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="quick-view-of-the-data">
+<h3>Quick view of the data<a class="headerlink" href="#quick-view-of-the-data" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">filled.contour</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span><span class="w"> </span><span class="n">lat</span><span class="p">,</span><span class="w"> </span><span class="n">sos</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">paste</span><span class="p">(</span><span class="s">"Sea surface salinity at "</span><span class="p">,</span><span class="w"> </span><span class="n">datetime_var</span><span class="p">),</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Longitude"</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Latitude"</span><span class="p">,</span><span class="w"> </span><span class="n">levels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">pretty</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">20</span><span class="p">,</span><span class="m">40</span><span class="p">),</span><span class="w"> </span><span class="m">20</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../../../_images/bee65a53cdd075d14006f1f961645027dcf41f0f47c8c4911c6f922c3d24e5a8.png"><img alt="../../../_images/bee65a53cdd075d14006f1f961645027dcf41f0f47c8c4911c6f922c3d24e5a8.png" src="../../../_images/bee65a53cdd075d14006f1f961645027dcf41f0f47c8c4911c6f922c3d24e5a8.png" style="width: 420px; height: 420px;" />
+</a>
+</div>
+</div>
+</section>
+<section id="convert-the-matrix-to-dataframe">
+<h3>Convert the matrix to dataframe<a class="headerlink" href="#convert-the-matrix-to-dataframe" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">expand.grid</span><span class="p">(</span><span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lon</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lat</span><span class="p">)</span>
+<span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.vector</span><span class="p">(</span><span class="nf">t</span><span class="p">(</span><span class="n">sos</span><span class="p">))</span>
+<span class="n">df</span><span class="o">$</span><span class="n">Data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data</span>
+<span class="nf">names</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">"lon"</span><span class="p">,</span><span class="w"> </span><span class="s">"lat"</span><span class="p">,</span><span class="w"> </span><span class="s">"sos"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A data.frame: 653256 × 3</caption>
+<thead>
+	<tr><th scope=col>lon</th><th scope=col>lat</th><th scope=col>sos</th></tr>
+	<tr><th scope=col>&lt;dbl[1d]&gt;</th><th scope=col>&lt;dbl[1d]&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>261.5577</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>261.6384</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>261.7191</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>261.7998</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>261.8804</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>261.9611</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>262.0418</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>262.1225</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>262.2031</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>262.2838</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>262.3645</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>262.4452</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>262.5258</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>262.6065</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>262.6872</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>262.7679</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>262.8485</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>262.9292</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>263.0099</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>263.0906</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>263.1713</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>263.2519</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>263.3326</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>263.4133</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>263.4940</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>263.5746</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>263.6553</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>263.7360</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>263.8167</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>263.8973</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>⋮</td><td>⋮</td><td>⋮</td></tr>
+	<tr><td>321.5804</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>321.6611</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>321.7418</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>321.8224</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>321.9031</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>321.9838</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>322.0645</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>322.1451</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>322.2258</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>322.3065</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>322.3872</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>322.4679</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>322.5485</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>322.6292</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>322.7099</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>322.7906</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>322.8712</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>322.9519</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>323.0326</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>323.1133</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>323.1939</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>323.2746</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>323.3553</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>323.4360</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>323.5166</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>323.5973</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>323.6780</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>323.7587</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>323.8393</td><td>58.16076</td><td>NA</td></tr>
+	<tr><td>323.9200</td><td>58.16076</td><td>NA</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="link-to-data-source-raw-gridded-product">
+<h3>Link to data source (Raw gridded product)<a class="headerlink" href="#link-to-data-source-raw-gridded-product" title="Link to this heading">#</a></h3>
+<p>Let’s proceed to load a more complex data structure, specifically the raw grid structure from the regional MOM6 output. This time besides the data itself we also need to load the grid structure that is stored in another file</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Specify the OPeNDAP server URL (using regular grid output)</span>
+<span class="n">url</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">"http://psl.noaa.gov/thredds/dodsC/Projects/CEFI/regional_mom6/northwest_atlantic/hist_run/ocean_monthly.199301-201912.sos.nc"</span>
+<span class="n">url_static</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">"http://psl.noaa.gov/thredds/dodsC/Projects/CEFI/regional_mom6/northwest_atlantic/hist_run/ocean_static.nc"</span>
+
+<span class="c1"># Open a NetCDF file lazily and remotely</span>
+<span class="n">ncopendap</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">nc_open</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">ncstaticopendap</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">nc_open</span><span class="p">(</span><span class="n">url_static</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id1">
+<h3>Load the data to local memory<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read the data into memory</span>
+<span class="n">timeslice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>
+<span class="n">lon</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ncvar_get</span><span class="p">(</span><span class="n">ncstaticopendap</span><span class="p">,</span><span class="w"> </span><span class="s">"geolon"</span><span class="p">)</span>
+<span class="n">lat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ncvar_get</span><span class="p">(</span><span class="n">ncstaticopendap</span><span class="p">,</span><span class="w"> </span><span class="s">"geolat"</span><span class="p">)</span>
+<span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ncvar_get</span><span class="p">(</span><span class="n">ncopendap</span><span class="p">,</span><span class="w"> </span><span class="s">"xh"</span><span class="p">)</span>
+<span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ncvar_get</span><span class="p">(</span><span class="n">ncopendap</span><span class="p">,</span><span class="w"> </span><span class="s">"yh"</span><span class="p">)</span>
+<span class="n">time</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ncvar_get</span><span class="p">(</span><span class="n">ncopendap</span><span class="p">,</span><span class="w"> </span><span class="s">"time"</span><span class="p">,</span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">timeslice</span><span class="p">),</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">))</span>
+
+<span class="c1"># Read a slice of the data into memory</span>
+<span class="n">sos</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ncvar_get</span><span class="p">(</span><span class="n">ncopendap</span><span class="p">,</span><span class="w"> </span><span class="s">"sos"</span><span class="p">,</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">timeslice</span><span class="p">),</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># the matrix output of sea surface salinity in raw grid</span>
+<span class="n">sos</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A matrix: 775 × 845 of type dbl</caption>
+<tbody>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>⋯</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td></tr>
+	<tr><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋱</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td></tr>
+	<tr><td>35.73732</td><td>35.75211</td><td>35.76775</td><td>35.78499</td><td>35.80399</td><td>35.82481</td><td>35.84669</td><td>35.86594</td><td>35.88427</td><td>35.90309</td><td>⋯</td><td>34.74183</td><td>34.74885</td><td>34.75530</td><td>34.76198</td><td>34.77347</td><td>34.78117</td><td>34.79150</td><td>34.80341</td><td>34.80744</td><td>34.80382</td></tr>
+	<tr><td>35.74347</td><td>35.75854</td><td>35.77417</td><td>35.79116</td><td>35.80922</td><td>35.82854</td><td>35.84929</td><td>35.87097</td><td>35.89220</td><td>35.91507</td><td>⋯</td><td>34.74007</td><td>34.74696</td><td>34.75406</td><td>34.76025</td><td>34.76946</td><td>34.77598</td><td>34.78709</td><td>34.79802</td><td>34.80235</td><td>34.79925</td></tr>
+	<tr><td>35.74872</td><td>35.76469</td><td>35.78144</td><td>35.79950</td><td>35.81799</td><td>35.83715</td><td>35.85671</td><td>35.87993</td><td>35.90647</td><td>35.93594</td><td>⋯</td><td>34.74055</td><td>34.74673</td><td>34.75273</td><td>34.75952</td><td>34.76626</td><td>34.77199</td><td>34.78374</td><td>34.79375</td><td>34.79805</td><td>34.79605</td></tr>
+	<tr><td>35.75399</td><td>35.77160</td><td>35.78994</td><td>35.80998</td><td>35.82985</td><td>35.84939</td><td>35.87028</td><td>35.89694</td><td>35.92921</td><td>35.96128</td><td>⋯</td><td>34.74326</td><td>34.74893</td><td>34.75588</td><td>34.76089</td><td>34.76605</td><td>34.77135</td><td>34.78198</td><td>34.79104</td><td>34.79513</td><td>34.79423</td></tr>
+	<tr><td>35.75991</td><td>35.78012</td><td>35.80180</td><td>35.82500</td><td>35.84665</td><td>35.86760</td><td>35.89351</td><td>35.92406</td><td>35.95684</td><td>35.98414</td><td>⋯</td><td>34.74481</td><td>34.75119</td><td>34.75701</td><td>34.76218</td><td>34.76781</td><td>34.77275</td><td>34.78088</td><td>34.78871</td><td>34.79427</td><td>34.79507</td></tr>
+	<tr><td>35.76614</td><td>35.79010</td><td>35.81643</td><td>35.84371</td><td>35.86823</td><td>35.89356</td><td>35.92362</td><td>35.95520</td><td>35.98156</td><td>35.99871</td><td>⋯</td><td>34.74664</td><td>34.75316</td><td>34.75920</td><td>34.76384</td><td>34.76902</td><td>34.77319</td><td>34.77940</td><td>34.78753</td><td>34.79428</td><td>34.79642</td></tr>
+	<tr><td>35.77184</td><td>35.80320</td><td>35.83549</td><td>35.86644</td><td>35.89510</td><td>35.92461</td><td>35.95499</td><td>35.98087</td><td>35.99734</td><td>36.00962</td><td>⋯</td><td>34.75168</td><td>34.75727</td><td>34.76263</td><td>34.76563</td><td>34.76921</td><td>34.77169</td><td>34.78023</td><td>34.78937</td><td>34.79261</td><td>34.79115</td></tr>
+	<tr><td>35.79176</td><td>35.82871</td><td>35.86449</td><td>35.89830</td><td>35.92985</td><td>35.96031</td><td>35.98464</td><td>36.00058</td><td>36.01258</td><td>36.02085</td><td>⋯</td><td>34.75645</td><td>34.76141</td><td>34.76615</td><td>34.76857</td><td>34.76954</td><td>34.77270</td><td>34.78063</td><td>34.78531</td><td>34.78587</td><td>34.78553</td></tr>
+	<tr><td>35.81849</td><td>35.86094</td><td>35.89972</td><td>35.93602</td><td>35.96936</td><td>35.99604</td><td>36.01211</td><td>36.02367</td><td>36.03216</td><td>36.03805</td><td>⋯</td><td>34.75860</td><td>34.76439</td><td>34.76921</td><td>34.77116</td><td>34.77143</td><td>34.77227</td><td>34.77475</td><td>34.77716</td><td>34.77881</td><td>34.77959</td></tr>
+	<tr><td>35.85229</td><td>35.90033</td><td>35.94161</td><td>35.97860</td><td>36.01006</td><td>36.03037</td><td>36.04334</td><td>36.05209</td><td>36.05694</td><td>36.05532</td><td>⋯</td><td>34.75788</td><td>34.76408</td><td>34.77048</td><td>34.77503</td><td>34.77508</td><td>34.77147</td><td>34.77072</td><td>34.77249</td><td>34.77454</td><td>34.77719</td></tr>
+	<tr><td>35.89088</td><td>35.94348</td><td>35.98442</td><td>36.01878</td><td>36.04641</td><td>36.06373</td><td>36.07218</td><td>36.07386</td><td>36.07069</td><td>36.06542</td><td>⋯</td><td>34.75559</td><td>34.76167</td><td>34.76884</td><td>34.77396</td><td>34.77249</td><td>34.76988</td><td>34.76775</td><td>34.76955</td><td>34.77367</td><td>34.77547</td></tr>
+	<tr><td>35.93468</td><td>35.98758</td><td>36.02432</td><td>36.05505</td><td>36.07778</td><td>36.08831</td><td>36.08809</td><td>36.08439</td><td>36.07943</td><td>36.07302</td><td>⋯</td><td>34.75366</td><td>34.75819</td><td>34.76380</td><td>34.76355</td><td>34.76263</td><td>34.76416</td><td>34.76507</td><td>34.76950</td><td>34.77343</td><td>34.77827</td></tr>
+	<tr><td>35.98459</td><td>36.03147</td><td>36.06310</td><td>36.08709</td><td>36.10105</td><td>36.10301</td><td>36.09875</td><td>36.09341</td><td>36.08658</td><td>36.07885</td><td>⋯</td><td>34.75287</td><td>34.75510</td><td>34.75847</td><td>34.75804</td><td>34.75938</td><td>34.76343</td><td>34.76807</td><td>34.77243</td><td>34.77782</td><td>34.78239</td></tr>
+	<tr><td>36.03266</td><td>36.07052</td><td>36.09401</td><td>36.10909</td><td>36.11404</td><td>36.11124</td><td>36.10572</td><td>36.09956</td><td>36.09188</td><td>36.08228</td><td>⋯</td><td>34.75412</td><td>34.75491</td><td>34.75604</td><td>34.75639</td><td>34.75931</td><td>34.76489</td><td>34.77074</td><td>34.77544</td><td>34.78246</td><td>34.78851</td></tr>
+	<tr><td>36.06948</td><td>36.09710</td><td>36.11177</td><td>36.11891</td><td>36.11884</td><td>36.11526</td><td>36.11059</td><td>36.10513</td><td>36.09786</td><td>36.08878</td><td>⋯</td><td>34.75814</td><td>34.75723</td><td>34.75735</td><td>34.75822</td><td>34.76123</td><td>34.76734</td><td>34.77300</td><td>34.77911</td><td>34.78641</td><td>34.79278</td></tr>
+	<tr><td>36.09228</td><td>36.11261</td><td>36.12105</td><td>36.12352</td><td>36.12210</td><td>36.11980</td><td>36.11707</td><td>36.11308</td><td>36.10682</td><td>36.09795</td><td>⋯</td><td>34.76374</td><td>34.76221</td><td>34.76153</td><td>34.76190</td><td>34.76467</td><td>34.76989</td><td>34.77506</td><td>34.78184</td><td>34.78583</td><td>34.79063</td></tr>
+	<tr><td>36.10873</td><td>36.12297</td><td>36.12772</td><td>36.12782</td><td>36.12616</td><td>36.12471</td><td>36.12240</td><td>36.11840</td><td>36.11104</td><td>36.10219</td><td>⋯</td><td>34.77134</td><td>34.76945</td><td>34.76840</td><td>34.76893</td><td>34.77121</td><td>34.77441</td><td>34.77738</td><td>34.78075</td><td>34.78383</td><td>34.79235</td></tr>
+	<tr><td>36.12003</td><td>36.12850</td><td>36.13139</td><td>36.13056</td><td>36.12937</td><td>36.12822</td><td>36.12576</td><td>36.12041</td><td>36.11329</td><td>36.10403</td><td>⋯</td><td>34.78051</td><td>34.78014</td><td>34.77953</td><td>34.78069</td><td>34.78145</td><td>34.78087</td><td>34.77988</td><td>34.78026</td><td>34.78320</td><td>34.79461</td></tr>
+	<tr><td>36.12240</td><td>36.12873</td><td>36.13032</td><td>36.13067</td><td>36.13137</td><td>36.13127</td><td>36.12815</td><td>36.12268</td><td>36.11462</td><td>36.10641</td><td>⋯</td><td>34.78892</td><td>34.78871</td><td>34.78853</td><td>34.78832</td><td>34.78746</td><td>34.78473</td><td>34.78121</td><td>34.77990</td><td>34.78312</td><td>34.79782</td></tr>
+	<tr><td>36.12327</td><td>36.12809</td><td>36.12966</td><td>36.13176</td><td>36.13519</td><td>36.13640</td><td>36.13218</td><td>36.12464</td><td>36.11688</td><td>36.10892</td><td>⋯</td><td>34.79141</td><td>34.79150</td><td>34.79116</td><td>34.79100</td><td>34.78973</td><td>34.78682</td><td>34.78267</td><td>34.78022</td><td>34.78268</td><td>34.79837</td></tr>
+	<tr><td>36.12235</td><td>36.12587</td><td>36.12846</td><td>36.13327</td><td>36.13896</td><td>36.14053</td><td>36.13519</td><td>36.12803</td><td>36.11976</td><td>36.11133</td><td>⋯</td><td>34.78933</td><td>34.79167</td><td>34.79282</td><td>34.79296</td><td>34.79168</td><td>34.78898</td><td>34.78468</td><td>34.78143</td><td>34.78281</td><td>34.79902</td></tr>
+	<tr><td>36.11827</td><td>36.12311</td><td>36.12852</td><td>36.13622</td><td>36.14262</td><td>36.14237</td><td>36.13649</td><td>36.12973</td><td>36.12213</td><td>36.11448</td><td>⋯</td><td>34.78428</td><td>34.78930</td><td>34.79375</td><td>34.79462</td><td>34.79387</td><td>34.79168</td><td>34.78774</td><td>34.78355</td><td>34.78294</td><td>34.79818</td></tr>
+	<tr><td>36.11377</td><td>36.12162</td><td>36.13048</td><td>36.13988</td><td>36.14495</td><td>36.14320</td><td>36.13723</td><td>36.13057</td><td>36.12360</td><td>36.11602</td><td>⋯</td><td>34.78087</td><td>34.78915</td><td>34.79570</td><td>34.79795</td><td>34.79765</td><td>34.79544</td><td>34.79133</td><td>34.78603</td><td>34.78435</td><td>34.79842</td></tr>
+	<tr><td>36.11106</td><td>36.12183</td><td>36.13318</td><td>36.14381</td><td>36.14735</td><td>36.14430</td><td>36.13747</td><td>36.13098</td><td>36.12392</td><td>36.11750</td><td>⋯</td><td>34.78038</td><td>34.79306</td><td>34.79961</td><td>34.80222</td><td>34.80171</td><td>34.79923</td><td>34.79480</td><td>34.78858</td><td>34.78695</td><td>34.79873</td></tr>
+	<tr><td>36.11074</td><td>36.12377</td><td>36.13774</td><td>36.14756</td><td>36.14980</td><td>36.14645</td><td>36.13930</td><td>36.13240</td><td>36.12564</td><td>36.11958</td><td>⋯</td><td>34.78101</td><td>34.79494</td><td>34.80204</td><td>34.80565</td><td>34.80472</td><td>34.80161</td><td>34.79697</td><td>34.79111</td><td>34.78962</td><td>34.79716</td></tr>
+	<tr><td>36.11198</td><td>36.12755</td><td>36.14240</td><td>36.15292</td><td>36.15370</td><td>36.14853</td><td>36.14039</td><td>36.13404</td><td>36.12736</td><td>36.12235</td><td>⋯</td><td>34.78083</td><td>34.79425</td><td>34.80330</td><td>34.80870</td><td>34.80772</td><td>34.80411</td><td>34.79947</td><td>34.79444</td><td>34.79238</td><td>34.79815</td></tr>
+	<tr><td>36.11395</td><td>36.13034</td><td>36.14713</td><td>36.15790</td><td>36.15601</td><td>36.14931</td><td>36.14114</td><td>36.13492</td><td>36.12917</td><td>36.12513</td><td>⋯</td><td>34.77925</td><td>34.79216</td><td>34.80213</td><td>34.80917</td><td>34.80971</td><td>34.80688</td><td>34.80214</td><td>34.79800</td><td>34.79546</td><td>34.79882</td></tr>
+	<tr><td>36.11729</td><td>36.13261</td><td>36.15156</td><td>36.16260</td><td>36.15745</td><td>36.14740</td><td>36.13891</td><td>36.13419</td><td>36.12997</td><td>36.12748</td><td>⋯</td><td>34.77820</td><td>34.78896</td><td>34.79790</td><td>34.80653</td><td>34.80907</td><td>34.80830</td><td>34.80481</td><td>34.80073</td><td>34.79851</td><td>34.79847</td></tr>
+	<tr><td>36.11865</td><td>36.13560</td><td>36.15705</td><td>36.16481</td><td>36.15582</td><td>36.14455</td><td>36.13679</td><td>36.13355</td><td>36.13084</td><td>36.13040</td><td>⋯</td><td>34.77723</td><td>34.78655</td><td>34.79427</td><td>34.80303</td><td>34.80806</td><td>34.80904</td><td>34.80748</td><td>34.80367</td><td>34.80128</td><td>34.79967</td></tr>
+	<tr><td>36.11730</td><td>36.14172</td><td>36.16437</td><td>36.16450</td><td>36.15329</td><td>36.14296</td><td>36.13626</td><td>36.13550</td><td>36.13425</td><td>36.13582</td><td>⋯</td><td>34.77248</td><td>34.78026</td><td>34.78853</td><td>34.79757</td><td>34.80496</td><td>34.80810</td><td>34.80864</td><td>34.80613</td><td>34.80275</td><td>34.80037</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="id2">
+<h3>Converting time array to datetime<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>The origial time would be only in the unit of time “days since 1993-01-01”. In order to understand what is the actual time. We need to grab the time unit and the time number and convert to a datetime object.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the units</span>
+<span class="n">tunits</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">ncatt_get</span><span class="p">(</span><span class="n">ncopendap</span><span class="p">,</span><span class="w"> </span><span class="s">"time"</span><span class="p">,</span><span class="w"> </span><span class="s">"units"</span><span class="p">)</span>
+<span class="n">datesince</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tunits</span><span class="o">$</span><span class="n">value</span>
+<span class="n">datesince</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">substr</span><span class="p">(</span><span class="n">datesince</span><span class="p">,</span><span class="w"> </span><span class="nf">nchar</span><span class="p">(</span><span class="n">datesince</span><span class="p">)</span><span class="m">-18</span><span class="p">,</span><span class="w"> </span><span class="nf">nchar</span><span class="p">(</span><span class="n">datesince</span><span class="p">)</span><span class="m">-8</span><span class="p">)</span>
+<span class="n">datesince</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">'1993-01-01 '</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># convert the number to datetime (input should be in second while the time is in unit of days)</span>
+<span class="n">datetime_var</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.POSIXct</span><span class="p">(</span><span class="n">time</span><span class="o">*</span><span class="m">86400</span><span class="p">,</span><span class="w"> </span><span class="n">origin</span><span class="o">=</span><span class="n">datesince</span><span class="p">,</span><span class="w"> </span><span class="n">tz</span><span class="o">=</span><span class="s">"UTC"</span><span class="p">)</span>
+<span class="n">datetime_var</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] "1993-01-16 12:00:00 UTC"
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id3">
+<h3>Quick view of the data<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">filled.contour</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">sos</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">paste</span><span class="p">(</span><span class="s">"Sea surface salinity on raw grid at "</span><span class="p">,</span><span class="w"> </span><span class="n">datetime_var</span><span class="p">),</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"xh"</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"yh"</span><span class="p">,</span><span class="w"> </span><span class="n">levels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">pretty</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">20</span><span class="p">,</span><span class="m">40</span><span class="p">),</span><span class="w"> </span><span class="m">20</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../../../_images/cd47122bcb5acfa4e9e436e4a5be12c2dbed89d591f020d6a55d00cd96338df8.png"><img alt="../../../_images/cd47122bcb5acfa4e9e436e4a5be12c2dbed89d591f020d6a55d00cd96338df8.png" src="../../../_images/cd47122bcb5acfa4e9e436e4a5be12c2dbed89d591f020d6a55d00cd96338df8.png" style="width: 420px; height: 420px;" />
+</a>
+</div>
+</div>
+</section>
+<section id="id4">
+<h3>Convert the matrix to dataframe<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p>Since we might want the dataframe to represent the lon lat data structure. We can convert the lon, lat,(not xh,yh which represents the grid number and not the actual lon lat) and data matrix to the dataframe.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.vector</span><span class="p">(</span><span class="nf">t</span><span class="p">(</span><span class="n">lon</span><span class="p">))</span>
+<span class="n">Y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.vector</span><span class="p">(</span><span class="nf">t</span><span class="p">(</span><span class="n">lat</span><span class="p">))</span>
+<span class="n">data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.vector</span><span class="p">(</span><span class="nf">t</span><span class="p">(</span><span class="n">sos</span><span class="p">))</span>
+
+<span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span>
+<span class="w">  </span><span class="s">"lon"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">,</span>
+<span class="w">  </span><span class="s">"lat"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span>
+<span class="w">  </span><span class="s">"sos"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="dataframe">
+<caption>A data.frame: 654875 × 3</caption>
+<thead>
+	<tr><th scope=col>lon</th><th scope=col>lat</th><th scope=col>sos</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>-98</td><td>5.272542</td><td>NA</td></tr>
+	<tr><td>-98</td><td>5.352199</td><td>NA</td></tr>
+	<tr><td>-98</td><td>5.431845</td><td>NA</td></tr>
+	<tr><td>-98</td><td>5.511480</td><td>NA</td></tr>
+	<tr><td>-98</td><td>5.591105</td><td>NA</td></tr>
+	<tr><td>-98</td><td>5.670719</td><td>NA</td></tr>
+	<tr><td>-98</td><td>5.750322</td><td>NA</td></tr>
+	<tr><td>-98</td><td>5.829914</td><td>NA</td></tr>
+	<tr><td>-98</td><td>5.909494</td><td>NA</td></tr>
+	<tr><td>-98</td><td>5.989064</td><td>NA</td></tr>
+	<tr><td>-98</td><td>6.068621</td><td>NA</td></tr>
+	<tr><td>-98</td><td>6.148167</td><td>NA</td></tr>
+	<tr><td>-98</td><td>6.227701</td><td>NA</td></tr>
+	<tr><td>-98</td><td>6.307223</td><td>NA</td></tr>
+	<tr><td>-98</td><td>6.386733</td><td>NA</td></tr>
+	<tr><td>-98</td><td>6.466230</td><td>NA</td></tr>
+	<tr><td>-98</td><td>6.545714</td><td>NA</td></tr>
+	<tr><td>-98</td><td>6.625186</td><td>NA</td></tr>
+	<tr><td>-98</td><td>6.704646</td><td>NA</td></tr>
+	<tr><td>-98</td><td>6.784092</td><td>NA</td></tr>
+	<tr><td>-98</td><td>6.863526</td><td>NA</td></tr>
+	<tr><td>-98</td><td>6.942946</td><td>NA</td></tr>
+	<tr><td>-98</td><td>7.022352</td><td>NA</td></tr>
+	<tr><td>-98</td><td>7.101746</td><td>NA</td></tr>
+	<tr><td>-98</td><td>7.181125</td><td>NA</td></tr>
+	<tr><td>-98</td><td>7.260490</td><td>NA</td></tr>
+	<tr><td>-98</td><td>7.339842</td><td>NA</td></tr>
+	<tr><td>-98</td><td>7.419179</td><td>NA</td></tr>
+	<tr><td>-98</td><td>7.498502</td><td>NA</td></tr>
+	<tr><td>-98</td><td>7.577811</td><td>NA</td></tr>
+	<tr><td>⋮</td><td>⋮</td><td>⋮</td></tr>
+	<tr><td>-36.93195</td><td>56.94660</td><td>34.74023</td></tr>
+	<tr><td>-36.94019</td><td>56.98895</td><td>34.74160</td></tr>
+	<tr><td>-36.94849</td><td>57.03125</td><td>34.74315</td></tr>
+	<tr><td>-36.95685</td><td>57.07353</td><td>34.74638</td></tr>
+	<tr><td>-36.96524</td><td>57.11577</td><td>34.74915</td></tr>
+	<tr><td>-36.97369</td><td>57.15798</td><td>34.74821</td></tr>
+	<tr><td>-36.98215</td><td>57.20015</td><td>34.74909</td></tr>
+	<tr><td>-36.99069</td><td>57.24229</td><td>34.75011</td></tr>
+	<tr><td>-36.99927</td><td>57.28439</td><td>34.75198</td></tr>
+	<tr><td>-37.00787</td><td>57.32647</td><td>34.75169</td></tr>
+	<tr><td>-37.01654</td><td>57.36850</td><td>34.74945</td></tr>
+	<tr><td>-37.02524</td><td>57.41050</td><td>34.74542</td></tr>
+	<tr><td>-37.03397</td><td>57.45247</td><td>34.74216</td></tr>
+	<tr><td>-37.04276</td><td>57.49440</td><td>34.74070</td></tr>
+	<tr><td>-37.05161</td><td>57.53630</td><td>34.74549</td></tr>
+	<tr><td>-37.06049</td><td>57.57817</td><td>34.75808</td></tr>
+	<tr><td>-37.06940</td><td>57.62000</td><td>34.76130</td></tr>
+	<tr><td>-37.07837</td><td>57.66180</td><td>34.77727</td></tr>
+	<tr><td>-37.08740</td><td>57.70356</td><td>34.78886</td></tr>
+	<tr><td>-37.09647</td><td>57.74529</td><td>34.78878</td></tr>
+	<tr><td>-37.10556</td><td>57.78699</td><td>34.78788</td></tr>
+	<tr><td>-37.11472</td><td>57.82865</td><td>34.78782</td></tr>
+	<tr><td>-37.12390</td><td>57.87028</td><td>34.79068</td></tr>
+	<tr><td>-37.13315</td><td>57.91188</td><td>34.78967</td></tr>
+	<tr><td>-37.14243</td><td>57.95344</td><td>34.78308</td></tr>
+	<tr><td>-37.15176</td><td>57.99497</td><td>34.78175</td></tr>
+	<tr><td>-37.16113</td><td>58.03646</td><td>34.78161</td></tr>
+	<tr><td>-37.17056</td><td>58.07793</td><td>34.78364</td></tr>
+	<tr><td>-37.18005</td><td>58.11936</td><td>34.78035</td></tr>
+	<tr><td>-37.18954</td><td>58.16076</td><td>34.77749</td></tr>
+</tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "r"
+        },
+        kernelOptions: {
+            name: "ir",
+            path: "./content/data_access/access_opendap"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ir'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="python_get_cefi.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Accessing CEFI data with Python</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../access_cloud.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Cloud Storage</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#packages-used">Packages used</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-r-packages">Import R packages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#help-page-for-the-package-and-related-functions">Help page for the package and related functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#direct-opendap-server-data-access">Direct OPeNDAP server data access</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#link-to-data-source-regular-gridded-product">Link to data source (regular gridded product)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-the-data-to-local-memory">Load the data to local memory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-time-array-to-datetime">Converting time array to datetime</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-view-of-the-data">Quick view of the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convert-the-matrix-to-dataframe">Convert the matrix to dataframe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#link-to-data-source-raw-gridded-product">Link to data source (Raw gridded product)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Load the data to local memory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Converting time array to datetime</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Quick view of the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Convert the matrix to dataframe</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By NOAA CEFI data portal team
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <a href="mailto:chia-wei.hsu@noaa.gov">Contact Us</a> <br>
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,701 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Frequently Ask Questions &#8212; CEFI Data Cookbook</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/model_doc/regional_mom6_faq';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="CEFI data" href="../data_access/access_cefi.html" />
+    <link rel="prev" title="Regional MOM6 Grid" href="model_config/model_grid.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../cefi_goal.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/CEFI_logo_nobg.png" class="logo__image only-light" alt="CEFI Data Cookbook - Home"/>
+    <img src="../../_static/CEFI_logo_nobg.png" class="logo__image only-dark pst-js-only" alt="CEFI Data Cookbook - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../cefi_goal.html">
+                    Changing, Ecosystems, and Fisheries Initiative (CEFI)
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">CEFI Data Portal's Goal</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">CEFI Data Portal</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">How to?</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../how_to_use.html">Use the CEFI Cookbook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to_conda.html">Setup An Analyses Ready Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to_jupyter.html">Launch A Local JupyterLab</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regional MOM6</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="what_is_regional_mom6.html">Regional MOM6 introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="model_config/model_grid.html">Regional MOM6 Grid</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Frequently Ask Questions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Data Access</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_access/access_cefi.html">CEFI data</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data_access/access_cefi/python_get_cefi.html">Accessing CEFI data with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_access/access_cefi/r_get_cefi.html">Accessing CEFI data with R</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_access/access_cefi/python_get_cefi_cloud.html">Accessing CEFI Cloud data with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_access/access_cefi/r_get_cefi_cloud.html">Accessing CEFI Cloud data with R</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_access/access_erddap.html">ERDDAP Server</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data_access/access_erddap/erddap_interface.html">ERDDAP Server Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_access/access_erddap/python_interface_griddap.html">Accessing gridded data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_access/access_erddap/python_interface_tabledap.html">Accessing table (spreadsheet) data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_access/access_erddap/python_get_gliders.html">Batch access (ex: gliders)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_access/access_erddap/R_erddap.html">Accessing ERDDAP data with R</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_access/access_opendap.html">OPeNDAP Server</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data_access/access_opendap/opendap_interface.html">OPeNDAP Server Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_access/access_opendap/python_get_cefi.html">Accessing CEFI data with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_access/access_opendap/r_get_cefi.html">Accessing CEFI data with R</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_access/access_cloud.html">Cloud Storage</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data_access/access_cloud/python_get_cefi_cloud.html">Accessing CEFI Cloud data with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_access/access_cloud/r_get_cefi_cloud.html">Accessing CEFI Cloud data with R</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_access/access_polar.html">NOAA PolarWatch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_access/data_faq.html">Frequently Ask Questions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://ioos.github.io/ioos_code_lab/content/intro.html">The U.S. Integrated Ocean Observing System (IOOS) CodeLab</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/NOAA-CEFI-Portal/cefi-cookbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/NOAA-CEFI-Portal/cefi-cookbook/issues/new?title=Issue%20on%20page%20%2Fcontent/model_doc/regional_mom6_faq.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/model_doc/regional_mom6_faq.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Frequently Ask Questions</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-regional-mom6-how-is-it-different-from-other-operational-models">Why regional MOM6? How is it different from other operational models?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#are-regional-models-the-same-as-global-models">Are regional models the same as global models?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#is-regional-mom6-the-same-as-global-mom6">Is regional MOM6 the same as global MOM6?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#are-the-boundary-conditions-part-of-a-regional-model">Are the boundary conditions part of a regional model?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-differences-between-historical-run-forecast-and-projection">What are differences between historical run, forecast, and projection?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-cobalt-and-how-is-it-related-to-the-regional-mom6">What is COBALT? And how is it related to the regional mom6?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-z-vertical-coordinate-why-not-use-the-regular-height-coordinate">What is z* vertical coordinate? Why not use the regular height coordinate?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-reanalysis">What is reanalysis?</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="frequently-ask-questions">
+<h1>Frequently Ask Questions<a class="headerlink" href="#frequently-ask-questions" title="Link to this heading">#</a></h1>
+<section id="why-regional-mom6-how-is-it-different-from-other-operational-models">
+<h2>Why regional MOM6? How is it different from other operational models?<a class="headerlink" href="#why-regional-mom6-how-is-it-different-from-other-operational-models" title="Link to this heading">#</a></h2>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Regional models have some benefits over global models, including being able to represent finer scale features more rapidly. They can also be “tuned” (have their many parameter values adjusted) to better represent conditions in the region of interest. While regional ocean models including the Regional Ocean Modeling System (<a class="reference external" href="https://www.myroms.org">ROMS</a>) and Finite Volume Coastal Ocean Model  (<a class="reference external" href="https://csdms.colorado.edu/wiki/Model:FVCOM">FVCOM</a>) have been developed and used for many years, NOAA did not have regional ocean model capability. Building off the expertise in developing global models, the regional version of MOM6 has been developed particularly with fishery and ocean habitat applications in mind.</p>
+</div>
+</details></section>
+<section id="are-regional-models-the-same-as-global-models">
+<h2>Are regional models the same as global models?<a class="headerlink" href="#are-regional-models-the-same-as-global-models" title="Link to this heading">#</a></h2>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">The Earth system is often simulated by coupling models representing different parts of the earth system together.  Common components include the atmosphere, ocean, sea ice, land, land vegetation, and ocean biogeochemistry.  Terminology varies depending on which components are included:</p>
+<ul class="simple">
+<li><p class="sd-card-text">Earth system model (ESM): Earth system models couple all of the components listed in the previous section. They are global and their dynamics are almost entirely emergent from their internal dynamics; in general, the only inputs provided to these models are solar forcing, volcanic aerosols, and human-produced greenhouse gas emissions.</p></li>
+<li><p class="sd-card-text">General circulation model (GCM): These are similar to ESMs, but without ocean biogeochemistry and a simplified version of vegetation on land.  (In the past, the term “general circulation model” was used to describe just the atmosphere or ocean component models)</p></li>
+<li><p class="sd-card-text">Atmospheric model : can be both global or regional where the sea surface temperatures are specified as boundary conditions with an interactive land component.</p></li>
+<li><p class="sd-card-text">Ocean model: Ocean models remove the atmospheric and land components and focus only on the ocean; they often include sea ice and ocean biogeochemistry as well.  These are less computationally intensive than fully coupled ESMs, and also provide extra  flexibility in experimental design since the atmospheric components are provided as user inputs.  They can be very useful to address research questions where the feedback of ocean dynamics on the atmosphere can be ignored or approximated via input setup.</p></li>
+<li><p class="sd-card-text">Regional ocean model: A regional ocean simulates only a specific section of the globe.  This adds extra lateral boundaries to the setup relative to a global model, which introduces additional computational complexities.  However, the limited spatial extent allows simulation at higher resolution than a global model given the same computing resources.  Regional models also allow for tailoring of input model components and input parameters to capture dynamics specific to a region that may not be applicable globally.</p></li>
+</ul>
+</div>
+</details></section>
+<section id="is-regional-mom6-the-same-as-global-mom6">
+<h2>Is regional MOM6 the same as global MOM6?<a class="headerlink" href="#is-regional-mom6-the-same-as-global-mom6" title="Link to this heading">#</a></h2>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><a class="reference external" href="https://www.gfdl.noaa.gov/mom-ocean-model/">The Modular Ocean Model, version 6 (MOM6)</a> is the ocean component of the NOAA Geophysical Fluid Dynamics Laboratory (GFDL)’s earth system model (ESM4). This model has been developed over several decades and is one of the world’s premier ESMs. The MOM6 ocean model simulates physical ocean dynamics like ocean currents, temperature, and salinity, and can be coupled to a sea ice model (SIS2) that simulates formation and melting of sea ice and an ocean biogeochemical model (COBALT) that simulates nutrient cycling and lower trophic level dynamics.</p>
+<p class="sd-card-text">While the global version of MOM6 has existed for many decades, the regional version has been  developed much more recently and is still being improved. Simulating open lateral boundaries is a complex task, and it took time to add these capabilities in a manner compatible with the global MOM6 configuration.  A description of how these boundary conditions are implemented can be found in the <a class="reference external" href="https://gmd.copernicus.org/articles/16/6943/2023/">documentation paper</a> for the northwest Atlantic implementation. Both the global and regional implementations use the same underlying code base.</p>
+</div>
+</details></section>
+<section id="are-the-boundary-conditions-part-of-a-regional-model">
+<h2>Are the boundary conditions part of a regional model?<a class="headerlink" href="#are-the-boundary-conditions-part-of-a-regional-model" title="Link to this heading">#</a></h2>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">A regional ocean model always requires external input to prescribe what is happening at the surface and lateral boundaries; that input usually comes from the output of a larger- and coarser-scale global model or a <a class="reference internal" href="#reanalyses"><span class="std std-ref">reanalysis</span></a>, which combines a model with observations.  These boundary conditions play a strong driving role in any simulation, and a regional model will inherit some of both the skill and biases of its parent model/<a class="reference internal" href="#reanalyses"><span class="std std-ref">reanalysis</span></a>.  A regional model is more than just a high-resolution filter for the parent model; it can resolve dynamics not possible at a coarser scale, and also can add new processes not present in the parent (for example, extra biological complexity).  This can alleviate biases from the parent model.  But at the same time, some biases can be amplified in the regional model output.  The resulting features in a regional model will always be a combination of the parent model’s dynamics and its own internal dynamics.</p>
+</div>
+</details></section>
+<section id="what-are-differences-between-historical-run-forecast-and-projection">
+<h2>What are differences between historical run, forecast, and projection?<a class="headerlink" href="#what-are-differences-between-historical-run-forecast-and-projection" title="Link to this heading">#</a></h2>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Different types of regional simulations can be run by pairing a regional MOM6 domain with different types of parent models/datasets for its atmospheric and boundary condition forcing.  The terminology for these different simulation types – historical, forecast, projection, etc. – is not standardized across the field and can be confusing.  Here’s a brief summary of the CEFI simulations and our chosen terminology:</p>
+<ul class="simple">
+<li><p class="sd-card-text">Historical simulations: CEFI’s historical simulations attempt to simulate real-world conditions in the recent past. They derive their input forcing from a global <a class="reference internal" href="#reanalyses"><span class="std std-ref">reanalysis</span></a>.  Reanalyses combine model dynamics and observations using a process known as data assimilation. Regional historical runs can be used to measure the skill of the model compared to observations.  They also play many roles in research and ecosystem management: to fill in spatiotemporal gaps in observations, provide a physical basis to drive fisheries and other ecosystem models, initialize forecasts, and many more.  Note that our historical simulations do not themselves assimilate observations; they are simply forced by a data-assimilative parent model.  Sometimes historical simulations are referred to as “hindcasts”.<br><br>
+Note on terminology - In some contexts, “historical” ESM or global model simulations can refer the historical experiment output of an earth system model intercomparison project (e.g., <a class="reference external" href="https://doi.org/10.5194/gmd-9-1937-2016">CMIP6</a>). Unlike a reanalysis model, these ESMs are not directly tied to observations on initialization. They usually start from a simulation designed to bring the internal dynamics into equilibrium under pre-industrial conditions (i.e. letting the model approach its long-term average). They do not assimilate data and are tied to specific time periods only by prescribed greenhouse gas emissions and atmospheric aerosols. A skillful ESM/GCM will capture real-world statistical variability across interannual and decadal scales, but will not have a year-to-year match to the real world.  For example, they will produce warm or cold events like ENSO, but not specific heat waves when they occur in the real world.  The CEFI suite does not currently include this type of CMIP historical experiment simulation.<br><br></p></li>
+<li><p class="sd-card-text">Short-term forecasts: Regional forecast simulations derive their atmospheric and boundary forcing from a global seasonal forecast model.  CEFI uses the seasonal simulations from <a class="reference external" href="https://www.gfdl.noaa.gov/spear/">SPEAR</a>, GFDL’s MOM6-based seasonal and decadal forecasts.  Global earth system model seasonal forecasts are initialized from real-world conditions, then integrated forward in time in a freely-evolving manner for anywhere from a few months to a decade.  The CEFI suite includes 1-year seasonal forecasts, initialized 4 times per year.<br><br></p></li>
+<li><p class="sd-card-text">Long-term forecasts: Decadal forecasts that are initialized once per year and extend to 10 years will be added.<br><br>
+Forecast ensembles - Due to the chaotic nature of the Earth system, very small differences in conditions at one time can lead to large differences in future values.  The SPEAR simulations account for this by running multiple forecast simulations with slight differences in their initial conditions, producing an ensemble of forecasts that can be used to quantify the uncertainty of predictions. The CEFI regional seasonal forecasts downscale 10 of these ensemble members.<br><br>
+Note on terminology - Forecasts are usually run starting from near-present conditions to predict the future.  But they can also be initialized from past conditions. This type of forecast is sometimes referred to as a retrospective forecast/reforecast.  These differ from the historical simulations because they are not tied to real-world data during the simulation period, only at their initialization time.  The primary purpose of these simulations is to assess the skill of a forecast model by comparing the forecasts to real-world data (or to a <a class="reference internal" href="#reanalyses"><span class="std std-ref">reanalysis</span></a> or historical simulation).<br><br></p></li>
+<li><p class="sd-card-text">Long-term projections: Long-term projections focus on predicting the change in the Earth system over time scales of 100 years.  On these time scales, the conditions at the start of the simulation are much less important than in short-term forecasts.  Instead, changes in long-term drivers, especially the concentrations of CO2 and other greenhouse gasses in the atmosphere, control the outcomes.  ESM projections are a key part of Coupled Model Intercomparison Projects (CMIP), and encompass a wide variety of simulations with different assumptions about the future trajectory of greenhouse gas emissions, land use, etc. The CEFI suite will include downscaled versions of selected simulations across parent models and scenarios.  These simulations will extend to 2100.<br><br></p></li>
+</ul>
+</div>
+</details></section>
+<section id="what-is-cobalt-and-how-is-it-related-to-the-regional-mom6">
+<h2>What is COBALT? And how is it related to the regional mom6?<a class="headerlink" href="#what-is-cobalt-and-how-is-it-related-to-the-regional-mom6" title="Link to this heading">#</a></h2>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Carbon, Ocean Biogeochemistry and Lower Trophics (COBALT) (version 2 <a class="reference external" href="https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2019MS002043">COBALTv2</a>, with enhancements for regional MOM6) is the ocean biogeochemical model associated with MOM6.  COBALTv3 includes 40 state variables that simulate nutrient cycling for carbon, alkalinity, oxygen, nitrogen, phosphorus, iron, silica, calcium carbonate, and lithogenic minerals, as well as the food web dynamics of phytoplankton and zooplankton.</p>
+<p class="sd-card-text">The COBALT source code is included within the MOM6 component, and when active there is two-way feedback between ocean and biogeochemical state variables (for example, temperature influences many of the biological rate parameters, while phytoplankton biomass impacts solar radiation reaching and hence heating the water column).</p>
+</div>
+</details></section>
+<section id="what-is-z-vertical-coordinate-why-not-use-the-regular-height-coordinate">
+<h2>What is z* vertical coordinate? Why not use the regular height coordinate?<a class="headerlink" href="#what-is-z-vertical-coordinate-why-not-use-the-regular-height-coordinate" title="Link to this heading">#</a></h2>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">The regional MOM6 simulations use z* as the vertical coordinate. It’s essentially a height (z) based system but shares some similarity with a terrain following (σ) coordinate system. Indeed, z*  only differs from z when the free-surface elevation is non-zero.The  coordinate system transforms the moving boundary problem of the oceans free surface into a fixed domain.</p>
+<p class="sd-card-text">Alistair Adcroft, A., Jean-Michel Campin, J.-M., 2004: Rescaled height coordinates for accurate representation of free-surface flows in ocean circulation models, Ocean Modelling, 7, 3–4,
+269-284, <a class="reference external" href="https://doi.org/10.1016/j.ocemod.2003.09.003">https://doi.org/10.1016/j.ocemod.2003.09.003</a>.</p>
+<p class="sd-card-text">Note that this is the model coordinate system - output is archived at set depth levels.</p>
+</div>
+</details></section>
+<section id="what-is-reanalysis">
+<span id="reanalyses"></span><h2>What is reanalysis?<a class="headerlink" href="#what-is-reanalysis" title="Link to this heading">#</a></h2>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Answer</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Reanalysis is a method that gives us the most comprehensive view of past weather and long term conditions. It combines observations and past weather forecasts using modern forecasting models to create a complete and consistent global picture over time, like a map without any gaps in time and space.</p>
+<p class="sd-card-text"><strong>Why it matters:</strong> Reanalysis is crucial for understanding long term change and current weather extremes. Observations of the Earth system are not always evenly distributed and can contain errors even after entering the satellite era. Reanalysis helps fill these gaps in space and provides a consistent view of the Earth’s state at any given time, reducing any misleading interpretation of signal changes.</p>
+<p class="sd-card-text"><strong>How it’s done:</strong> Reanalysis merges past weather forecasts and observations through a process called data assimilation. This process is similar to how daily weather forecasts are made. It starts with an analysis of the current state of the Earth system, which is a blend of observations and a short-range forecast based on the previous analysis. Reanalysis is typically produced at a lower resolution than current weather forecasts and use the same modern data assimilation system and forecasting model throughout the reanalysis period. Before a new reanalysis is produced, efforts are made to improve the quality and availability of past observational data. This can involve digitising old records and reprocessing existing satellite records. As reanalysis is produced, it undergo careful quality control and the reliability is assessed by comparing with reanalyses produced at other institutes.</p>
+</div>
+</details></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/model_doc"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="model_config/model_grid.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Regional MOM6 Grid</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../data_access/access_cefi.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">CEFI data</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-regional-mom6-how-is-it-different-from-other-operational-models">Why regional MOM6? How is it different from other operational models?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#are-regional-models-the-same-as-global-models">Are regional models the same as global models?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#is-regional-mom6-the-same-as-global-mom6">Is regional MOM6 the same as global MOM6?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#are-the-boundary-conditions-part-of-a-regional-model">Are the boundary conditions part of a regional model?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-differences-between-historical-run-forecast-and-projection">What are differences between historical run, forecast, and projection?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-cobalt-and-how-is-it-related-to-the-regional-mom6">What is COBALT? And how is it related to the regional mom6?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-z-vertical-coordinate-why-not-use-the-regular-height-coordinate">What is z* vertical coordinate? Why not use the regular height coordinate?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-reanalysis">What is reanalysis?</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By NOAA CEFI data portal team
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <a href="mailto:chia-wei.hsu@noaa.gov">Contact Us</a> <br>
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
