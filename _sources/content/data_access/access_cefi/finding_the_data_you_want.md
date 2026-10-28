@@ -6,4 +6,4 @@ In the interactive availability matrix you can begin with the region of interest
 
 The image URL is ../../.. at the moment.
 
-![Searching for Data Availability in the NWA region](../../../../../images/data_availability_openind_page.png)
+![Searching for Data Availability in the NWA region](../../../images/data_availability_opening_page.png)
