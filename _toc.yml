@@ -28,6 +28,7 @@ parts:
     chapters:
     - file: content/data_access/access_cefi.md
       sections:
+      - file: content/data_access/access_cefi/finding_the_data_you_want.md
       - file: content/data_access/access_cefi/python_get_cefi.ipynb
       - file: content/data_access/access_cefi/r_get_cefi.ipynb
       - file: content/data_access/access_cefi/python_get_cefi_cloud.ipynb

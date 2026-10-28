@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/.doctrees/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/html/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/html/_sources/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/html/reports/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/_build/jupyter_execute/.venv" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

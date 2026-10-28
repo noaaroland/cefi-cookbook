@@ -9,7 +9,8 @@ logo: images/CEFI_logo_nobg.png
 # See https://jupyterbook.org/content/execute.html
 execute:
   # execute_notebooks: force
-  execute_notebooks: cache
+  # execute_notebooks: cache
+  execute_notebooks: 'off'
   timeout: -1
   exclude_patterns:
     - '*_notebook.ipynb'
