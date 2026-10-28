@@ -14,9 +14,9 @@ The CEFI Cookbook aims to provide valuable information to users of varying exper
 
 ## Basic functions of the CEFI Cookbook
 ### Searching topic
-The search bar, located in the left column, is an extremely effective tool for locating relevant resources in the Cookbook. If you're seeking information on a specific topic or have a particular search phrase, utilizing the search bar should be your initial approach.
+The search bar, located in the left column, is an extremely effective tool for locating relevant resources in the Cookbook. If you're seeking information on a specific topic or have a particular search phrase, using the search bar should be your initial approach.
 
-The following example shows the search phrase of "regionl mom6"
+The following example shows the search phrase of "regional mom6"
 ```{image} ../images/search_bar.png
 :alt: cookbook search bar image
 :class: bg-primary mb-1
@@ -62,7 +62,7 @@ Google Colab is also an available option, although it may require the installati
 
 (submit-issue)=
 #### Submit GitHub issue
-On each page, users have the ability to submit a specific issue related to the page they are currently viewing. This feature encourages user contributions and facilitates easy reporting of bugs or suggestions for changes. By leveraging the principles of open science and open-source software, this function keeps the Cookbook as a "CEFI community project".
+On each page, users can submit a specific issue related to the page they are currently viewing. This feature encourages user contributions and facilitates easy reporting of bugs or suggestions for changes. By leveraging the principles of open science and open-source software, this function keeps the Cookbook as a "CEFI community project".
 
 #### Download for local view
 The third functionality allows for the effortless conversion of file formats from an online resource into a locally shareable and downloadable PDF. This feature simplifies the process of transforming digital content into a universally accessible format.

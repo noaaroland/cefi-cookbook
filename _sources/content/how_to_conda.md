@@ -19,7 +19,7 @@ There are many useful setup instructions available, but this guide is unique in 
 
 
 ### Install and Initialize Conda
-The following intruction will install "miniconda" which is the light-weight version of Conda system.
+The following instructions will install "miniconda" which is the light-weight version of Conda system.
 For a more customizable setup, please check out the [official miniconda installation](https://docs.anaconda.com/miniconda/#quick-command-line-install).
 `````{tab-set}
 ````{tab-item} Linux/MacOS

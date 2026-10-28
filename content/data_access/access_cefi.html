@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -67,7 +67,7 @@
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Accessing CEFI data with Python" href="access_cefi/python_get_cefi.html" />
+    <link rel="next" title="Finding the Data You Want" href="access_cefi/finding_the_data_you_want.html" />
     <link rel="prev" title="Frequently Ask Questions" href="../model_doc/regional_mom6_faq.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -243,6 +243,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data Access</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">CEFI data</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="access_cefi/finding_the_data_you_want.html">Finding the Data You Want</a></li>
 <li class="toctree-l2"><a class="reference internal" href="access_cefi/python_get_cefi.html">Accessing CEFI data with Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="access_cefi/r_get_cefi.html">Accessing CEFI data with R</a></li>
 <li class="toctree-l2"><a class="reference internal" href="access_cefi/python_get_cefi_cloud.html">Accessing CEFI Cloud data with Python</a></li>
@@ -466,11 +467,13 @@
             </div>
             <nav aria-label="Page">
                 <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">CEFI data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cefi-portal-data-access">CEFI portal data access</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cefi-nodd-data-access">CEFI NODD data access</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aws-s3">AWS S3</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#google-cloud-storage">Google Cloud Storage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-noaa-cefi-earthmover-io-catalog-for-data-access">The NOAA-CEFI earthmover.io catalog for data access</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cefi-portal-data-access">CEFI portal data access</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cefi-nodd-data-access">CEFI NODD data access</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aws-s3">AWS S3</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#google-cloud-storage">Google Cloud Storage</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-content-of-accessing-opendap-server">Table of Content of Accessing OPeNDAP Server</a></li>
@@ -487,12 +490,15 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="cefi-data">
 <h1>CEFI data<a class="headerlink" href="#cefi-data" title="Link to this heading">#</a></h1>
-<section id="id1">
-<h2>CEFI data<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
-<p>CEFI data is currently available through the PSL CEFI portal, supported by the PSL Thredds server. The same data are available from cloud storage on AWS S3 and Google Cloud Storage via the NOAA NODD program.</p>
-</section>
+<p>In November 2026, the NOAA/NEAP CEFI project transitioned to <a class="reference external" href="http://earthmover.io">earthmover.io</a> as the primary data access method for all users.
+The data is currently still available through the PSL CEFI portal, supported by the PSL Thredds server and is available from cloud storage on directly AWS S3 and Google Cloud Storage via the NOAA NODD program.</p>
+<p>However, the <a class="reference external" href="http://earthmover.io">earthmover.io</a> catalog and access services (ArrayLake and OPeNDAP) are much a faster and more streamlined way to access the data. All the variables in a region, experiment type, and time frequency are grouped together is a single catalog which you can open in single Python or R statement. From there you can access any subset of the data along any hyperslab needed for your analysis.</p>
+<section id="the-noaa-cefi-earthmover-io-catalog-for-data-access">
+<h2>The NOAA-CEFI <a class="reference external" href="http://earthmover.io">earthmover.io</a> catalog for data access<a class="headerlink" href="#the-noaa-cefi-earthmover-io-catalog-for-data-access" title="Link to this heading">#</a></h2>
+<p>The entire public CEFI data catalog is available in the <a class="reference external" href="http://earthmover.io">earthmover.io</a> marketplace. If you are not associated with the CEFI project you can subscribe to the catalog and access the data through the <a class="reference external" href="http://earthmover.io">earthmover.io</a> ArrayLake and OPeNDAP services. If you are associated with the CEFI project you can access the data through this same mechanism, or you can setup authenticated access via your NOAA credentials, which will be required to access to certain pre-release and private data sets associated with the project.</p>
+<p>We strongly encourage you to use the <a class="reference external" href="http://earthmover.io">earthmover.io</a> catalog, but we will maintain the information for other access routes for the time being.</p>
 <section id="cefi-portal-data-access">
-<h2>CEFI portal data access<a class="headerlink" href="#cefi-portal-data-access" title="Link to this heading">#</a></h2>
+<h3>CEFI portal data access<a class="headerlink" href="#cefi-portal-data-access" title="Link to this heading">#</a></h3>
 <p>The CEFI portal currently provides three ways to <a class="reference external" href="https://psl.noaa.gov/cefi_portal/#data_access">access data</a>, including:</p>
 <ul class="simple">
 <li><p>Direct <a class="reference external" href="https://psl.noaa.gov/thredds/catalog/Projects/CEFI/regional_mom6/catalog.html">Thredds server catalog access</a></p></li>
@@ -502,15 +508,16 @@ These three methods aim to meet a wide range of data needs for the public and re
 </ul>
 </section>
 <section id="cefi-nodd-data-access">
-<h2>CEFI NODD data access<a class="headerlink" href="#cefi-nodd-data-access" title="Link to this heading">#</a></h2>
+<h3>CEFI NODD data access<a class="headerlink" href="#cefi-nodd-data-access" title="Link to this heading">#</a></h3>
 <p>The cloud access methods (from the browser, from Python, and from R) will work from any computing resource, but they are particularly effective if you are using a computing resource associated with the same cloud vendor where the data are stored.</p>
 <section id="aws-s3">
-<h3>AWS S3<a class="headerlink" href="#aws-s3" title="Link to this heading">#</a></h3>
+<h4>AWS S3<a class="headerlink" href="#aws-s3" title="Link to this heading">#</a></h4>
 <p>You can view the data on AWS S3 via the <a class="reference external" href="https://noaa-oar-cefi-regional-mom6-nwa-pds.s3.amazonaws.com/index.html">AWS S3 Explorer</a> interface. In the following sections we will show you how to access the data directly from you Python and R scripts by reading the Kerchunk ZARR index files that accompany the cloud data.</p>
 </section>
 <section id="google-cloud-storage">
-<h3>Google Cloud Storage<a class="headerlink" href="#google-cloud-storage" title="Link to this heading">#</a></h3>
+<h4>Google Cloud Storage<a class="headerlink" href="#google-cloud-storage" title="Link to this heading">#</a></h4>
 <p>You can view the data on Google Cloud Storage via the <a class="reference external" href="https://console.cloud.google.com/storage/browser/noaa-oar-cefi-regional-mom6-nwa">cloud console</a> interface. You must be signed into a Google account. Any account should have access. However, in the following sections we will show you how to access the data directly from you Python and R scripts by reading the Kerchunk ZARR index files that accompany the cloud data.</p>
+</section>
 </section>
 </section>
 <hr class="docutils" />
@@ -518,6 +525,7 @@ These three methods aim to meet a wide range of data needs for the public and re
 <h2>Table of Content of Accessing OPeNDAP Server<a class="headerlink" href="#table-of-content-of-accessing-opendap-server" title="Link to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="access_cefi/finding_the_data_you_want.html">Finding the Data You Want</a></li>
 <li class="toctree-l1"><a class="reference internal" href="access_cefi/python_get_cefi.html">Accessing CEFI data with Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="access_cefi/r_get_cefi.html">Accessing CEFI data with R</a></li>
 <li class="toctree-l1"><a class="reference internal" href="access_cefi/python_get_cefi_cloud.html">Accessing CEFI Cloud data with Python</a></li>
@@ -567,11 +575,11 @@ These three methods aim to meet a wide range of data needs for the public and re
       </div>
     </a>
     <a class="right-next"
-       href="access_cefi/python_get_cefi.html"
+       href="access_cefi/finding_the_data_you_want.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Accessing CEFI data with Python</p>
+        <p class="prev-next-title">Finding the Data You Want</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -593,11 +601,13 @@ These three methods aim to meet a wide range of data needs for the public and re
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">CEFI data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cefi-portal-data-access">CEFI portal data access</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cefi-nodd-data-access">CEFI NODD data access</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aws-s3">AWS S3</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#google-cloud-storage">Google Cloud Storage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-noaa-cefi-earthmover-io-catalog-for-data-access">The NOAA-CEFI earthmover.io catalog for data access</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cefi-portal-data-access">CEFI portal data access</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cefi-nodd-data-access">CEFI NODD data access</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aws-s3">AWS S3</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#google-cloud-storage">Google Cloud Storage</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-content-of-accessing-opendap-server">Table of Content of Accessing OPeNDAP Server</a></li>
