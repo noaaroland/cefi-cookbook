@@ -11,3 +11,27 @@ The CEFI Cookbook aims to provide valuable information to users of varying exper
 - Tutorials on accessing CEFI related data
 - Derivation of marine resource related indexes
 - Free and light cloud computation
+
+You need to activate the environment you used to install the build tools. For example if you used a virtual environment called .vene use:
+```
+source .venv/bin/activate
+```
+
+To build:
+```
+jupyter-book build .
+```
+
+To publish on github pages:
+```
+ghp-import -n -p -f _build/html
+```
+
+To view locally with a server (use the port of your choice):
+```
+cd _build/html
+python -m http.server 8080
+```
+and open
+http://localhost:8080/
+in your browser.
