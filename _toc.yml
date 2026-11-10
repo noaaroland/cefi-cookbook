@@ -29,10 +29,11 @@ parts:
     - file: content/data_access/access_cefi.md
       sections:
       - file: content/data_access/access_cefi/finding_the_data_you_want.md
+      - file: content/data_access/access_cefi/earthmover_catalog.md
       - file: content/data_access/access_cefi/python_get_cefi.ipynb
+      - file: content/data_access/access_cefi/python_get_cefi_continued.ipynb
       - file: content/data_access/access_cefi/r_get_cefi.ipynb
-      - file: content/data_access/access_cefi/python_get_cefi_cloud.ipynb
-      - file: content/data_access/access_cefi/r_get_cefi_cloud.ipynb
+      - file: content/data_access/access_cefi/legacy_access_methods.md
     - file: content/data_access/access_erddap.md
       sections:
       - file: content/data_access/access_erddap/erddap_interface.md
@@ -45,10 +46,6 @@ parts:
       - file: content/data_access/access_opendap/opendap_interface.md
       - file: content/data_access/access_opendap/python_get_cefi.ipynb
       - file: content/data_access/access_opendap/r_get_cefi.ipynb
-    - file: content/data_access/access_cloud.md
-      sections:
-      - file: content/data_access/access_cloud/python_get_cefi_cloud.ipynb
-      - file: content/data_access/access_cloud/r_get_cefi_cloud.ipynb
     - file: content/data_access/access_polar.md
     - file: content/data_access/data_faq.md
 
