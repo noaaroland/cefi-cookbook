@@ -16,6 +16,14 @@ You need to activate the environment you used to install the build tools. For ex
 ```
 source .venv/bin/activate
 ```
+N.B. For some changes, jupyter-book will not be aware that the structure has changed. It has no internal tracking
+mechanism. Therefore, before publishing, it's a good idea to build the entire book from scratch to make sure all the
+changes are applied.
+
+To clean:
+ ```
+jupyter-book clean .
+```
 
 To build:
 ```

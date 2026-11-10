@@ -244,9 +244,9 @@
 <li class="toctree-l2"><a class="reference internal" href="finding_the_data_you_want.html">Finding the Data You Want</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Navigating the Earthmover Catalog</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_get_cefi.html">Accessing CEFI data with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_get_cefi_continued.html">Accessing CEFI data with Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="r_get_cefi.html">Accessing CEFI data with R</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python_get_cefi_cloud.html">Accessing CEFI Cloud data with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="r_get_cefi_cloud.html">Accessing CEFI Cloud data with R</a></li>
+<li class="toctree-l2"><a class="reference internal" href="legacy_access_methods.html">Legacy Access Methods</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../access_erddap.html">ERDDAP Server</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -261,11 +261,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../access_opendap/opendap_interface.html">OPeNDAP Server Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../access_opendap/python_get_cefi.html">Accessing CEFI data with Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../access_opendap/r_get_cefi.html">Accessing CEFI data with R</a></li>
-</ul>
-</details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../access_cloud.html">Cloud Storage</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../access_cloud/python_get_cefi_cloud.html">Accessing CEFI Cloud data with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../access_cloud/r_get_cefi_cloud.html">Accessing CEFI Cloud data with R</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../access_polar.html">NOAA PolarWatch</a></li>
@@ -468,6 +463,7 @@
                 <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python">Python</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#opendap">OPeNDAP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-the-earthmover-catalog-with-python">Read the Earthmover Catalog with Python</a></li>
 </ul>
             </nav>
         </div>
@@ -493,6 +489,69 @@
 <p>Right now the best option for R access is OPeNDAP. Earthmover and the community are developing solutions for R access using the ArrayLake interface as is the standard for Python. Until those solutions are available, OPeNDAP is the best option. On the OPeNDAP data access page pay particular attention to the section showing how to read the data set in R.</p>
 <p><img alt="OPeNDAP code snippets" src="../../../_images/opendap_snippets.png" /></p>
 <p>N.B. the OPeNDAP service is set to scale to 0 when not in use. In other words, if no requests are made for a period of time, the service will shut down. The service will automatically restart when a request is made, but there may be a small delay while it starts up. Once it has restarted all subsequent requests will begin returning data almost immediately.</p>
+</section>
+<section id="read-the-earthmover-catalog-with-python">
+<h2>Read the Earthmover Catalog with Python<a class="headerlink" href="#read-the-earthmover-catalog-with-python" title="Link to this heading">#</a></h2>
+<p>Each of the data sets which make up the CEFI model output collection is represented in the Earthmover catalog as an <a class="reference external" href="https://icechunk.io/en/stable/">Icechunk repository</a>. As such, you can use the <a class="reference external" href="https://icechunk.io/en/stable/reference/">Icechunk Python API</a> to scan the catalog with your own Python code. Once you discover a data set of interest with you code, you can read the data itself using xarray (or zarr). This chunk of code runs through the entire data collection and finds all the data variables with ‘temp’ in their name or long_name attribute. It only takes a few seconds to run.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">arraylake</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dotenv</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dotenv</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">zarr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+
+<span class="c1"># Set the organization to search</span>
+
+<span class="n">org</span> <span class="o">=</span> <span class="s2">"NOAA-CEFI"</span>
+
+<span class="c1"># N.B. I am logging into the catalog while it is still private. When it is public, the login code </span>
+<span class="c1"># will look a bit different.</span>
+<span class="c1">#</span>
+<span class="c1"># Load environment variables from the .env file</span>
+<span class="n">load_dotenv</span><span class="p">()</span>
+<span class="n">ARRAYLAKE_TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"ARRAYLAKE_TOKEN"</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">ARRAYLAKE_TOKEN</span><span class="p">)</span>
+
+
+<span class="c1"># Find all the repos that belong to NOAA-CEFI</span>
+<span class="n">repos</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">list_repos</span><span class="p">(</span><span class="n">org</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">repo</span> <span class="ow">in</span> <span class="n">repos</span><span class="p">:</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">📦 Processing Repository: </span><span class="si">{</span><span class="n">repo</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">repo_obj</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_repo</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">org</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">repo</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">repo_obj</span><span class="o">.</span><span class="n">readonly_session</span><span class="p">(</span><span class="n">branch</span><span class="o">=</span><span class="s2">"main"</span><span class="p">)</span>
+        <span class="n">root_group</span> <span class="o">=</span> <span class="n">zarr</span><span class="o">.</span><span class="n">open_group</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">store</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">"r"</span><span class="p">)</span>
+        <span class="n">root_attrs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">root_group</span><span class="o">.</span><span class="n">attrs</span><span class="p">)</span>
+
+        <span class="c1"># Discover all unique groups containing arrays</span>
+        <span class="n">groups_with_arrays</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">root_group</span><span class="o">.</span><span class="n">members</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">member</span><span class="p">,</span> <span class="n">zarr</span><span class="o">.</span><span class="n">Array</span><span class="p">):</span>
+                <span class="n">parent_group</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                <span class="n">groups_with_arrays</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">parent_group</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">group_path</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">groups_with_arrays</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"   📂 Processing group: </span><span class="si">{</span><span class="n">group_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+            <span class="n">group_arg</span> <span class="o">=</span> <span class="n">group_path</span> <span class="k">if</span> <span class="n">group_path</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_zarr</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">store</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group_arg</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">ds</span><span class="o">.</span><span class="n">data_vars</span><span class="p">:</span>
+                    <span class="n">long_name</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">if</span> <span class="s1">'long_name'</span> <span class="ow">in</span> <span class="n">ds</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
+                        <span class="n">long_name</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">'long_name'</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="s1">'temp'</span> <span class="ow">in</span> <span class="n">var</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"        🎉 Found a variable called </span><span class="si">{</span><span class="n">var</span><span class="si">}{</span><span class="sa">f</span><span class="s1">' with long_name = </span><span class="si">{</span><span class="n">long_name</span><span class="si">}</span><span class="s1">'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">long_name</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">''</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">long_name</span> <span class="ow">and</span> <span class="s1">'temp'</span> <span class="ow">in</span> <span class="n">ds</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">'long_name'</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"        🎉 Found a variable called </span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2"> with long_name = </span><span class="si">{</span><span class="n">long_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'        ❌ Failed to open </span><span class="si">{</span><span class="n">group_arg</span><span class="si">}</span><span class="s1"> because of </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'❌ Failed to read </span><span class="si">{</span><span class="n">repo</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> because of </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+
+</pre></div>
+</div>
 </section>
 </section>
 
@@ -564,6 +623,7 @@
     <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python">Python</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#opendap">OPeNDAP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-the-earthmover-catalog-with-python">Read the Earthmover Catalog with Python</a></li>
 </ul>
   </nav></div>
 

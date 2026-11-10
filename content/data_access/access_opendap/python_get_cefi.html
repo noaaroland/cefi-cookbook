@@ -244,9 +244,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../access_cefi/finding_the_data_you_want.html">Finding the Data You Want</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../access_cefi/earthmover_catalog.html">Navigating the Earthmover Catalog</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../access_cefi/python_get_cefi.html">Accessing CEFI data with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../access_cefi/python_get_cefi_continued.html">Accessing CEFI data with Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../access_cefi/r_get_cefi.html">Accessing CEFI data with R</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../access_cefi/python_get_cefi_cloud.html">Accessing CEFI Cloud data with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../access_cefi/r_get_cefi_cloud.html">Accessing CEFI Cloud data with R</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../access_cefi/legacy_access_methods.html">Legacy Access Methods</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../access_erddap.html">ERDDAP Server</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -261,11 +261,6 @@
 <li class="toctree-l2"><a class="reference internal" href="opendap_interface.html">OPeNDAP Server Interface</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Accessing CEFI data with Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="r_get_cefi.html">Accessing CEFI data with R</a></li>
-</ul>
-</details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../access_cloud.html">Cloud Storage</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../access_cloud/python_get_cefi_cloud.html">Accessing CEFI Cloud data with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../access_cloud/r_get_cefi_cloud.html">Accessing CEFI Cloud data with R</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../access_polar.html">NOAA PolarWatch</a></li>
@@ -2005,7 +2000,7 @@ Attributes: (12/28)
 <p class="admonition-title">Tip!</p>
 <p>When working with large netCDF files, OPeNDAP server requests can be slow to process, especially for large subsets. Always start by requesting the smallest possible subset to quickly inspect the data before attempting larger downloads. If you encounter a <code class="docutils literal notranslate"><span class="pre">DAP</span> <span class="pre">error</span></code>, it may indicate that the server is ignoring chunking due to its configuration. In such cases, manually concatenating smaller subsets is often necessary to acquire larger datasets efficiently.</p>
 <p>Sometimes, even if the subset you request is small, you may still encounter a <code class="docutils literal notranslate"><span class="pre">DAP</span> <span class="pre">error</span></code>. This often happens because the netCDF file is internally chunked, and if your requested slice overlaps with a large chunk, the server must read and transfer the entire chunk. As a result, the data volume can easily exceed the server’s transfer limit for certain dimensions (such as depth). We recommand concat the data after loading small slices one step at a time like what is shown below to side step the restriction.</p>
-<p>Since different users will have different data subsets in mind, it is difficult to find an “optimal” chunking scheme for every use case. Unfortunately, this is a downside of netCDF chunking when using OPeNDAP servers. If chunking causes issues or slows down your analysis, we recommend accessing the data from commercial cloud storage, such as AWS S3. See <a class="reference internal" href="../access_cloud/python_get_cefi_cloud.html"><span class="std std-doc">Accessing CEFI data on the cloud</span></a> for more details.</p>
+<p>Since different users will have different data subsets in mind, it is difficult to find an “optimal” chunking scheme for every use case. Unfortunately, this is a downside of netCDF chunking when using OPeNDAP servers. If chunking causes issues or slows down your analysis, we recommend accessing the data from commercial cloud storage, such as AWS S3. See <a class="reference internal" href="#../access_cloud/python_get_cefi_cloud.ipynb"><span class="xref myst">Accessing CEFI data on the cloud</span></a> for more details.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
